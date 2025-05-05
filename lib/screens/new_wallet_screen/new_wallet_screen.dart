@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:trust_wallet_reborn/screens/new_wallet_screen/widgets/transition_button.dart';
+import 'package:trust_wallet_reborn/screens/select_net_screen/select_net_screen.dart';
 import 'package:trust_wallet_reborn/uikit/buttons/ui_fab.dart';
+import 'package:trust_wallet_reborn/uikit/ui_appbar.dart';
 import 'package:trust_wallet_reborn/uikit/ui_theme.dart';
 
 class NewWalletScreen extends StatefulWidget {
@@ -34,7 +37,10 @@ class _NewWalletScreenState extends State<NewWalletScreen> {
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: [
-                    Row(children: [IconButton(onPressed: () {}, icon: Icon(Icons.close, size: 30.0,))], mainAxisAlignment: MainAxisAlignment.end,),
+                    Row(
+                      children: [IconButton(onPressed: () {}, icon: Icon(Icons.close, size: 30.0))],
+                      mainAxisAlignment: MainAxisAlignment.end,
+                    ),
                     FlutterLogo(size: 100),
                     SizedBox(height: 32.0),
                     Text(
@@ -66,47 +72,33 @@ class _NewWalletScreenState extends State<NewWalletScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: UITheme.background,
-      appBar: AppBar(
-        title: Text('Добавить существующий кошелек', style: TextStyle(color: UITheme.buttonTextLight, fontSize: 18)),
-        backgroundColor: UITheme.background,
-        foregroundColor: UITheme.buttonTextLight,
-      ),
+      appBar: UIAppBar(title: 'Добавить существующий кошелек'),
       body: Padding(
-        padding: const EdgeInsets.all(8.0),
+        padding: const EdgeInsets.all(16.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text('Популярное', style: TextStyle(color: UITheme.buttonTextLight, fontSize: 14)),
-            Padding(
-              padding: const EdgeInsets.symmetric(vertical: 16.0),
-              child: ListTile(
-                title: Text('Секретная фраза', style: TextStyle(color: UITheme.buttonTextLight, fontSize: 16)),
-                onTap: () {
-                  showBottomSheet();
-                },
-                trailing: Icon(Icons.arrow_forward_ios_rounded, color: UITheme.buttonTextLight, size: 18.0),
-                leading: Icon(Icons.access_alarms_rounded, color: UITheme.buttonTextLight),
-              ),
+            Text('Популярное', style: TextStyle(color: UITheme.textGrey, fontSize: 14)),
+            SizedBox(height: 16.0),
+            TransitionButton(title: 'Секретная фраза', icon: Icons.close),
+            SizedBox(height: 16.0),
+            TransitionButton(
+              title: 'Приватный ключ',
+              icon: Icons.lock_rounded,
+              onTap: () {
+                Navigator.of(context).push(MaterialPageRoute<void>(builder: (BuildContext context) => const SelectNetScreen()));
+              },
             ),
-            Padding(
-              padding: const EdgeInsets.symmetric(vertical: 16.0),
-              child: ListTile(
-                title: Text('Приватный ключ', style: TextStyle(color: UITheme.buttonTextLight, fontSize: 16)),
-                onTap: () {},
-                trailing: Icon(Icons.arrow_forward_ios_rounded, color: UITheme.buttonTextLight, size: 18.0),
-                leading: Icon(Icons.key, color: UITheme.buttonTextLight),
-              ),
-            ),
-            Text('Другие варианты', style: TextStyle(color: UITheme.buttonTextLight, fontSize: 14)),
-            Padding(
-              padding: const EdgeInsets.symmetric(vertical: 16.0),
-              child: ListTile(
-                title: Text('Удивление', style: TextStyle(color: UITheme.buttonTextLight, fontSize: 16)),
-                onTap: () {},
-                trailing: Icon(Icons.arrow_forward_ios_rounded, color: UITheme.buttonTextLight, size: 18.0),
-                leading: Icon(Icons.sim_card_alert, color: UITheme.buttonTextLight),
-              ),
-            ),
+            SizedBox(height: 16.0),
+            Text('Другие варианты', style: TextStyle(color: UITheme.textGrey, fontSize: 14)),
+            SizedBox(height: 16.0),
+            TransitionButton.small(title: 'Google Drive резервное копирование', icon: Icons.copy_all_rounded),
+            SizedBox(height: 16.0),
+            TransitionButton.small(title: 'Кошелек только для просмотра', icon: Icons.remove_red_eye_rounded),
+            SizedBox(height: 16.0),
+            TransitionButton.small(title: 'Keystore', icon: Icons.key_outlined),
+            SizedBox(height: 16.0),
+            TransitionButton.small(title: 'Swift', icon: Icons.settings_rounded, showBeta: true),
           ],
         ),
       ),
